@@ -4,43 +4,43 @@ import processing.sound.*;
 
 public interface PApplet {
 
-	void registerMethod(String string, Delay delay);
+	void registerMethod(String name, Delay delay);
 
-	void registerMethod(String string, Amplitude amplitude);
+	void registerMethod(String name, Amplitude amplitude);
 
-	void registerMethod(String string, AudioIn audioIn);
+	void registerMethod(String name, AudioIn audioIn);
 
-	void registerMethod(String string, SoundFile soundFile);
+	void registerMethod(String name, SoundFile soundFile);
 
-	void registerMethod(String string, BandPass bandPass);
+	void registerMethod(String name, BandPass bandPass);
 
-	void registerMethod(String string, BrownNoise brownNoise);
+	void registerMethod(String name, BrownNoise brownNoise);
 
-	void registerMethod(String string, Env env);
+	void registerMethod(String name, Env env);
 
-	void registerMethod(String string, FFT fft);
+	void registerMethod(String name, FFT fft);
 
-	void registerMethod(String string, HighPass highPass);
+	void registerMethod(String name, HighPass highPass);
 
-	void registerMethod(String string, LowPass lowPass);
+	void registerMethod(String name, LowPass lowPass);
 
-	void registerMethod(String string, Mix mix);
+	void registerMethod(String name, Mix mix);
 
-	void registerMethod(String string, PinkNoise pinkNoise);
+	void registerMethod(String name, PinkNoise pinkNoise);
 
-	void registerMethod(String string, Pulse pulse);
+	void registerMethod(String name, Pulse pulse);
 
-	void registerMethod(String string, Reverb reverb);
+	void registerMethod(String name, Reverb reverb);
 
-	void registerMethod(String string, SawOsc sawOsc);
+	void registerMethod(String name, SawOsc sawOsc);
 
-	void registerMethod(String string, SinOsc sinOsc);
+	void registerMethod(String name, SinOsc sinOsc);
 
-	void registerMethod(String string, SqrOsc sqrOsc);
+	void registerMethod(String name, SqrOsc sqrOsc);
 
-	void registerMethod(String string, TriOsc triOsc);
+	void registerMethod(String name, TriOsc triOsc);
 
-	void registerMethod(String string, WhiteNoise whiteNoise);
+	void registerMethod(String name, WhiteNoise whiteNoise);
 
 	String dataPath(String path);
 
