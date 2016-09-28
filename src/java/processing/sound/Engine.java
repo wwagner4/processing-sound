@@ -25,13 +25,11 @@ import processing.core.PApplet;
 
 public class Engine {
 
-	private static PApplet parent;
 	static MethClaInterface methCla;
 	private static int m_sampleRate=44100;
 	private static int m_bufferSize=512;
 
-    private Engine() {
-    	//welcome();
+    static {
     	methCla = new MethClaInterface();
 		methCla.engineNew(m_sampleRate, m_bufferSize);
 		methCla.engineStart();
@@ -46,7 +44,6 @@ public class Engine {
     }
 
     public static void setPreferences(PApplet theParent, int bufferSize, int sampleRate){
-    	parent = theParent;
     	m_bufferSize = bufferSize;
     	m_sampleRate = sampleRate;
     }
@@ -283,7 +280,4 @@ public class Engine {
 		methCla.engineStop();
 	}
 
- 	private void welcome() {
-		System.out.println("processing.sound v.09 by Wilm Thoben");
-	}
 }

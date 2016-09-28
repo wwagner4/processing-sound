@@ -32,7 +32,6 @@ import processing.core.PApplet;
 public class SqrOsc implements SoundObject {
 		
 	PApplet parent;
-	private Engine m_engine;
 	private int[] m_nodeId = {-1,-1};
 	private float m_freq = 440;
 	private float m_amp = 0.5f;
@@ -43,9 +42,9 @@ public class SqrOsc implements SoundObject {
 	public SqrOsc(PApplet theParent) {
 		this.parent = theParent;
 		parent.registerMethod("dispose", this);
-		m_engine.setPreferences(theParent, 512, 44100);
-    	m_engine.start();
-		m_panBusId = m_engine.busConstructMono();
+		Engine.setPreferences(theParent, 512, 44100);
+    	Engine.start();
+		m_panBusId = Engine.busConstructMono();
 	}
 	
 	/**
@@ -54,8 +53,8 @@ public class SqrOsc implements SoundObject {
 	**/
 
 	public void play(){
-		//m_nodeId = m_engine.pulsePlay(m_freq, 0.5f, m_amp*2, m_add-1, m_pos);
-		m_nodeId = m_engine.sqrPlay(m_freq, m_amp, m_add-1, m_pos, m_panBusId);
+		//m_nodeId = Engine.pulsePlay(m_freq, 0.5f, m_amp*2, m_add-1, m_pos);
+		m_nodeId = Engine.sqrPlay(m_freq, m_amp, m_add-1, m_pos, m_panBusId);
 	};	
 	
 	public void play(float freq, float amp, float add, float pos){
@@ -80,7 +79,7 @@ public class SqrOsc implements SoundObject {
 	
 	private void set(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.sqrSet(m_freq, m_amp, m_add-1, m_pos, m_nodeId);
+			Engine.sqrSet(m_freq, m_amp, m_add-1, m_pos, m_nodeId);
 		}	
 	}
 
@@ -149,7 +148,7 @@ public class SqrOsc implements SoundObject {
 	
 	public void stop(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.synthStop(m_nodeId);
+			Engine.synthStop(m_nodeId);
 			for(int i = 0; i < m_nodeId.length; i++)  {
 				m_nodeId[i] = -1;
 			}
@@ -161,7 +160,7 @@ public class SqrOsc implements SoundObject {
 	}
 	
 	public void dispose(){
-		m_engine.synthStop(m_nodeId);
+		Engine.synthStop(m_nodeId);
 	}
 }
 

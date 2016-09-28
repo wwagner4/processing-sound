@@ -33,7 +33,6 @@ import processing.core.PApplet;
 public class AudioIn implements SoundObject{
 	
 	PApplet parent;
-	private Engine m_engine;
 	private int[] m_nodeId = {-1,-1};
 	private float m_amp = 1.f;
 	private float m_add = 0;
@@ -43,8 +42,8 @@ public class AudioIn implements SoundObject{
 	public AudioIn (PApplet theParent, int in) {
 		this.parent = theParent;
 		parent.registerMethod("dispose", this);
-		m_engine.setPreferences(theParent, 512, 44100);
-    	m_engine.start();
+		Engine.setPreferences(theParent, 512, 44100);
+    	Engine.start();
     	m_in = in;
    	}
 	
@@ -54,7 +53,7 @@ public class AudioIn implements SoundObject{
    	**/
 
    	public void start(){
-		m_nodeId = m_engine.audioInStart(m_amp, m_add, m_pos, m_in);
+		m_nodeId = Engine.audioInStart(m_amp, m_add, m_pos, m_in);
 	}
 	
 	public void start(float amp, float add, float pos){
@@ -81,12 +80,12 @@ public class AudioIn implements SoundObject{
 		if(m_nodeId[1] < 0){
 			this.start();
 		}
-		m_engine.audioInPlay(m_nodeId[1]);
+		Engine.audioInPlay(m_nodeId[1]);
 	}
 	
 	private void set(){
 		if(m_nodeId[0] != -1 ) {		
-			m_engine.audioInSet(m_amp, m_add, m_pos, m_nodeId);
+			Engine.audioInSet(m_amp, m_add, m_pos, m_nodeId);
 		}
 	}
 	
@@ -143,7 +142,7 @@ public class AudioIn implements SoundObject{
 	
 	public void stop(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.synthStop(m_nodeId);
+			Engine.synthStop(m_nodeId);
 			for(int i = 0; i < m_nodeId.length; i++)  {
 				m_nodeId[i] = -1;
 			}
@@ -155,6 +154,6 @@ public class AudioIn implements SoundObject{
 	}
 
 	public void dispose() {
-		m_engine.synthStop(m_nodeId);
+		Engine.synthStop(m_nodeId);
 	}
 }

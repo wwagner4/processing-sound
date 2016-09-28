@@ -32,7 +32,6 @@ import processing.core.PApplet;
 public class Delay implements SoundObject{
 	
 	PApplet parent;
-	private Engine m_engine;
 	private int m_nodeId[] = {-1,-1};
 	private float m_maxDelayTime = 2;
 	private float m_delayTime = 0;
@@ -41,18 +40,18 @@ public class Delay implements SoundObject{
 	public Delay(PApplet theParent) {
 		this.parent = theParent;
 		parent.registerMethod("dispose", this);
-		m_engine.setPreferences(theParent, 512, 44100);
-    	m_engine.start();
+		Engine.setPreferences(theParent, 512, 44100);
+    	Engine.start();
    	}
 	
 	public void process(SoundObject input, float maxDelayTime, float delayTime, float feedBack){
 		m_maxDelayTime=maxDelayTime; m_delayTime=delayTime; m_feedBack=feedBack;
-		m_nodeId = m_engine.delayPlay(input.returnId(), m_maxDelayTime, m_delayTime, m_feedBack);
+		m_nodeId = Engine.delayPlay(input.returnId(), m_maxDelayTime, m_delayTime, m_feedBack);
 	}
 	
 	public void process(SoundObject input, float maxDelayTime, float delayTime){
 		m_maxDelayTime=maxDelayTime; m_delayTime=delayTime; 
-		m_nodeId = m_engine.delayPlay(input.returnId(), m_maxDelayTime, m_delayTime, m_feedBack);
+		m_nodeId = Engine.delayPlay(input.returnId(), m_maxDelayTime, m_delayTime, m_feedBack);
 	}
 
 	/**
@@ -64,12 +63,12 @@ public class Delay implements SoundObject{
 
 	public void process(SoundObject input, float maxDelayTime){
 		m_maxDelayTime=maxDelayTime; 
-		m_nodeId = m_engine.delayPlay(input.returnId(), m_maxDelayTime, m_delayTime, m_feedBack);
+		m_nodeId = Engine.delayPlay(input.returnId(), m_maxDelayTime, m_delayTime, m_feedBack);
 	}
 	
 	private void set(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.delaySet(m_delayTime, m_feedBack, m_nodeId[0]);
+			Engine.delaySet(m_delayTime, m_feedBack, m_nodeId[0]);
 		}
 	}
 	
@@ -118,7 +117,7 @@ public class Delay implements SoundObject{
 	
 	public void stop(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.synthStop(m_nodeId);
+			Engine.synthStop(m_nodeId);
 			for(int i = 0; i < m_nodeId.length; i++)  {
 				m_nodeId[i] = -1;
 			}
@@ -126,6 +125,6 @@ public class Delay implements SoundObject{
 	}
 
 	public void dispose() {
-		m_engine.synthStop(m_nodeId);
+		Engine.synthStop(m_nodeId);
 	}
 }

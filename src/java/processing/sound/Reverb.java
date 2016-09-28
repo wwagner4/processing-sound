@@ -32,7 +32,6 @@ import processing.core.PApplet;
 public class Reverb implements SoundObject{
 	
 	PApplet parent;
-	private Engine m_engine;
 	private int[] m_nodeId = {-1, -1};
 	private float m_room = 1;
 	private float m_damp = 0;
@@ -41,23 +40,23 @@ public class Reverb implements SoundObject{
 	public Reverb(PApplet theParent) {
 		this.parent = theParent;
 		parent.registerMethod("dispose", this);
-		m_engine.setPreferences(theParent, 512, 44100);
-    	m_engine.start();
+		Engine.setPreferences(theParent, 512, 44100);
+    	Engine.start();
    	}
 	
 	public void process(SoundObject input, float room, float damp, float wet){
 		m_room=room; m_damp=damp; m_wet=wet;
-		m_nodeId = m_engine.reverbPlay(input.returnId(), m_room, m_damp, m_wet);
+		m_nodeId = Engine.reverbPlay(input.returnId(), m_room, m_damp, m_wet);
 	}
 	
 	public void process(SoundObject input, float room, float damp){
 		m_room=room; m_damp=damp;
-		m_nodeId = m_engine.reverbPlay(input.returnId(), m_room, m_damp, m_wet);
+		m_nodeId = Engine.reverbPlay(input.returnId(), m_room, m_damp, m_wet);
 	}
 
 	public void process(SoundObject input, float room){
 		m_room=room;
-		m_nodeId = m_engine.reverbPlay(input.returnId(), m_room, m_damp, m_wet);
+		m_nodeId = Engine.reverbPlay(input.returnId(), m_room, m_damp, m_wet);
 	}
 
 	/**
@@ -67,12 +66,12 @@ public class Reverb implements SoundObject{
 	**/
 
 	public void process(SoundObject input){
-		m_nodeId = m_engine.reverbPlay(input.returnId(), m_room, m_damp, m_wet);
+		m_nodeId = Engine.reverbPlay(input.returnId(), m_room, m_damp, m_wet);
 	}	
 	
 	private void set(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.reverbSet(m_room, m_damp, m_wet, m_nodeId[0]);
+			Engine.reverbSet(m_room, m_damp, m_wet, m_nodeId[0]);
 		}
 	}
 	
@@ -133,7 +132,7 @@ public class Reverb implements SoundObject{
 
 	public void stop(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.synthStop(m_nodeId);
+			Engine.synthStop(m_nodeId);
 			for(int i = 0; i < m_nodeId.length; i++)  {
 				m_nodeId[i] = -1;
 			}
@@ -141,6 +140,6 @@ public class Reverb implements SoundObject{
 	}
 
 	public void dispose() {
-		m_engine.synthStop(m_nodeId);
+		Engine.synthStop(m_nodeId);
 	}
 }

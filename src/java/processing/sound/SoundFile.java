@@ -34,7 +34,6 @@ import java.io.File;
 public class SoundFile implements SoundObject {
 	
 	PApplet parent;
-	private Engine m_engine;
 	private MethClaInterface methCla;
 	private int[] m_nodeId = {-1,-1};
 	int[] m_info;
@@ -51,19 +50,19 @@ public class SoundFile implements SoundObject {
 	public SoundFile(PApplet theParent, String path) {
 		this.parent = theParent;
 		parent.registerMethod("dispose", this);
-		m_engine.setPreferences(theParent, 512, 44100);
-    	m_engine.start();
+		Engine.setPreferences(theParent, 512, 44100);
+    	Engine.start();
     	methCla = new MethClaInterface();
 		m_filePath=theParent.dataPath(path);
 		File sample = new File(m_filePath);
 		if(sample.isFile() == true){
-			m_info = m_engine.soundFileInfo(m_filePath);
+			m_info = Engine.soundFileInfo(m_filePath);
 		}
 		else {
 			System.out.println("Error: Soundfile doesn't exist. Pleae check path");
 		}
-		//m_panBusId = m_engine.soundFileConstructMono();
-		m_panBusId = m_engine.busConstructMono();
+		//m_panBusId = Engine.soundFileConstructMono();
+		m_panBusId = Engine.busConstructMono();
 	}
 	
 	/**
@@ -271,10 +270,10 @@ public class SoundFile implements SoundObject {
 		//if(m_nodeId[0] != -1 && m_isPlaying == 1) {
 		if(m_nodeId[0] != -1) {
 			if(this.channels() < 2){
-				m_engine.soundFileSetMono(m_rate, m_pos, m_amp, m_add, m_nodeId);		
+				Engine.soundFileSetMono(m_rate, m_pos, m_amp, m_add, m_nodeId);		
 			}
 			else if(this.channels() == 2){
-				m_engine.soundFileSetStereo(m_rate, m_amp, m_add, m_nodeId);
+				Engine.soundFileSetStereo(m_rate, m_amp, m_add, m_nodeId);
 			}	
 		}	
 	}
@@ -348,12 +347,12 @@ public class SoundFile implements SoundObject {
 
 	public void stop(){
 		// if(m_isPlaying == 1 && m_nodeId[0] != -1) {
-		// 	m_engine.synthStop(m_nodeId);
+		// 	Engine.synthStop(m_nodeId);
 		// 	for(int i = 0; i < m_nodeId.length; i++)  {
 		// 		m_nodeId[i] = -1;
 		// 	}		
 		// }
-		m_engine.synthStop(m_nodeId);
+		Engine.synthStop(m_nodeId);
 		for(int i = 0; i < m_nodeId.length; i++)  {
 			m_nodeId[i] = -1;
 		}	
@@ -370,6 +369,6 @@ public class SoundFile implements SoundObject {
 	}
 
 	public void dispose() {
-		m_engine.synthStop(m_nodeId);
+		Engine.synthStop(m_nodeId);
 	}
 }

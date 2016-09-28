@@ -32,7 +32,6 @@ import processing.core.PApplet;
 public class BandPass implements SoundObject{
 	
 	PApplet parent;
-	private Engine m_engine;
 	private int[] m_nodeId = {-1,-1};
 	private float m_freq = 4000;
 	private float m_bw = 1000;
@@ -40,18 +39,18 @@ public class BandPass implements SoundObject{
 	public BandPass(PApplet theParent) {
 		this.parent = theParent;
 		parent.registerMethod("dispose", this);
-		m_engine.setPreferences(theParent, 512, 44100);
-    	m_engine.start();
+		Engine.setPreferences(theParent, 512, 44100);
+    	Engine.start();
    	}
 	
 	public void process(SoundObject input, float freq, float bw){
 		m_freq=freq; m_bw=bw;
-		m_nodeId = m_engine.bandPassPlay(input.returnId(), m_freq, m_bw);
+		m_nodeId = Engine.bandPassPlay(input.returnId(), m_freq, m_bw);
 	}
 	
 	public void process(SoundObject input, float freq){
 		m_freq=freq;
-		m_nodeId = m_engine.bandPassPlay(input.returnId(), m_freq, m_bw);
+		m_nodeId = Engine.bandPassPlay(input.returnId(), m_freq, m_bw);
 	}
 	
 	/**
@@ -61,12 +60,12 @@ public class BandPass implements SoundObject{
    	**/	
 
 	public void process(SoundObject input){
-		m_nodeId = m_engine.bandPassPlay(input.returnId(), m_freq, m_bw);
+		m_nodeId = Engine.bandPassPlay(input.returnId(), m_freq, m_bw);
 	}
 
 	private void set(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.filterBwSet(m_freq, m_bw, m_nodeId[0]);
+			Engine.filterBwSet(m_freq, m_bw, m_nodeId[0]);
 		}
 	}
 	
@@ -115,7 +114,7 @@ public class BandPass implements SoundObject{
 	
 	public void stop(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.synthStop(m_nodeId);
+			Engine.synthStop(m_nodeId);
 			for(int i = 0; i < m_nodeId.length; i++)  {
 				m_nodeId[i] = -1;
 			}
@@ -123,6 +122,6 @@ public class BandPass implements SoundObject{
 	}
 
 	public void dispose() {
-		m_engine.synthStop(m_nodeId);
+		Engine.synthStop(m_nodeId);
 	}
 }

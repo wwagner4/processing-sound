@@ -32,7 +32,6 @@ import processing.core.PApplet;
 public class SinOsc implements Oscillator {
 	
 	PApplet parent;
-	private Engine m_engine;
 	private int[] m_nodeId = {-1,-1};
 	private float m_freq = 440;
 	private float m_amp = 0.5f;
@@ -43,9 +42,9 @@ public class SinOsc implements Oscillator {
 	public SinOsc(PApplet theParent) {
 		this.parent = theParent;
 		parent.registerMethod("dispose", this);
-		m_engine.setPreferences(theParent, 512, 44100);
-    	m_engine.start();	
-		m_panBusId = m_engine.busConstructMono();
+		Engine.setPreferences(theParent, 512, 44100);
+    	Engine.start();	
+		m_panBusId = Engine.busConstructMono();
     	
 	}
 	
@@ -70,12 +69,12 @@ public class SinOsc implements Oscillator {
 	**/
 
 	public void play(){
-		m_nodeId = m_engine.sinePlay(m_freq, m_amp, m_add, m_pos, m_panBusId);
+		m_nodeId = Engine.sinePlay(m_freq, m_amp, m_add, m_pos, m_panBusId);
 	}
 	
 	private void set(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.oscSet(m_freq, m_amp, m_add, m_pos, m_nodeId);
+			Engine.oscSet(m_freq, m_amp, m_add, m_pos, m_nodeId);
 		}	
 	}
 
@@ -144,7 +143,7 @@ public class SinOsc implements Oscillator {
 	
 	public void stop(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.synthStop(m_nodeId);
+			Engine.synthStop(m_nodeId);
 			for(int i = 0; i < m_nodeId.length; i++)  {
 				m_nodeId[i] = -1;
 			}
@@ -156,6 +155,6 @@ public class SinOsc implements Oscillator {
 	}
 
 	public void dispose() {
-		m_engine.synthStop(m_nodeId);
+		Engine.synthStop(m_nodeId);
 	}
 }

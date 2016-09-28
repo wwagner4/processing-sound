@@ -35,19 +35,18 @@ public class AudioDevice {
 
 	PApplet parent;
 	static int m_test;
-	private Engine m_engine;
 
     public AudioDevice(PApplet theParent, int sampleRate, int bufferSize) {
-    	m_engine.setPreferences(theParent, bufferSize, sampleRate);
-    	m_engine.start();
+    	Engine.setPreferences(theParent, bufferSize, sampleRate);
+    	Engine.start();
     }
 	
 	public void engineStop() {
-		m_engine.engineStop();
+		Engine.engineStop();
 	}
 	
 	public void dispose() {
-		m_engine.engineStop();
+		Engine.engineStop();
 	}
 
 }

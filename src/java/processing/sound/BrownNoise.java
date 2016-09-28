@@ -32,7 +32,6 @@ import processing.core.PApplet;
 public class BrownNoise implements Noise{
 	
 	PApplet parent;
-	private Engine m_engine;
 	private int[] m_nodeId = {-1,-1};
 	private float m_amp=0.5f;
 	private float m_add=0;
@@ -42,9 +41,9 @@ public class BrownNoise implements Noise{
 	public BrownNoise(PApplet theParent) {
 		this.parent = theParent;
 		parent.registerMethod("dispose", this);
-		m_engine.setPreferences(theParent, 512, 44100);
-    	m_engine.start();			
-    	m_panBusId = m_engine.busConstructMono();			
+		Engine.setPreferences(theParent, 512, 44100);
+    	Engine.start();			
+    	m_panBusId = Engine.busConstructMono();			
 	}
 	
 	/**
@@ -53,7 +52,7 @@ public class BrownNoise implements Noise{
 	**/
 
 	public void play(){
-		m_nodeId = m_engine.brownNoisePlay(m_amp, m_add, m_pos, m_panBusId);
+		m_nodeId = Engine.brownNoisePlay(m_amp, m_add, m_pos, m_panBusId);
 	}
 	
 	public void play(float amp, float add, float pos){
@@ -73,7 +72,7 @@ public class BrownNoise implements Noise{
 	
 	private void set(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.brownNoiseSet(m_amp, m_add, m_pos, m_nodeId);
+			Engine.brownNoiseSet(m_amp, m_add, m_pos, m_nodeId);
 		}
 	}
 	
@@ -130,7 +129,7 @@ public class BrownNoise implements Noise{
 
 	public void stop(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.synthStop(m_nodeId);
+			Engine.synthStop(m_nodeId);
 			for(int i = 0; i < m_nodeId.length; i++)  {
 				m_nodeId[i] = -1;
 			}
@@ -142,7 +141,7 @@ public class BrownNoise implements Noise{
 	}
 
 	public void dispose() {
-		m_engine.synthStop(m_nodeId);
+		Engine.synthStop(m_nodeId);
 	}
 };
 	

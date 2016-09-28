@@ -32,7 +32,6 @@ import processing.core.PApplet;
 public class Pulse implements SoundObject {
 		
 	PApplet parent;
-	private Engine m_engine;
 	private int[] m_nodeId = {-1,-1};
 	private float m_freq = 440;
 	private float m_width = 0.5f;	
@@ -44,9 +43,9 @@ public class Pulse implements SoundObject {
 	public Pulse(PApplet theParent) {
 		this.parent = theParent;
 		parent.registerMethod("dispose", this);
-		m_engine.setPreferences(theParent, 512, 44100);
-    	m_engine.start();
-		m_panBusId = m_engine.busConstructMono();    	
+		Engine.setPreferences(theParent, 512, 44100);
+    	Engine.start();
+		m_panBusId = Engine.busConstructMono();    	
    	}
 	
 	/**
@@ -55,7 +54,7 @@ public class Pulse implements SoundObject {
 	**/
 
 	public void play(){
-		m_nodeId = m_engine.pulsePlay(m_freq, m_width, m_amp, m_add, m_pos, m_panBusId);
+		m_nodeId = Engine.pulsePlay(m_freq, m_width, m_amp, m_add, m_pos, m_panBusId);
 	};	
 	
 	public void play(float freq, float width, float amp, float add, float pos){
@@ -85,7 +84,7 @@ public class Pulse implements SoundObject {
 	
 	private void set(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.pulseSet(m_freq, m_width, m_amp, m_add, m_pos, m_nodeId);
+			Engine.pulseSet(m_freq, m_width, m_amp, m_add, m_pos, m_nodeId);
 		}	
 	}
 	
@@ -166,7 +165,7 @@ public class Pulse implements SoundObject {
 
 	public void stop(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.synthStop(m_nodeId);
+			Engine.synthStop(m_nodeId);
 			for(int i = 0; i < m_nodeId.length; i++)  {
 				m_nodeId[i] = -1;
 			}
@@ -178,7 +177,7 @@ public class Pulse implements SoundObject {
 	};
 	
 	public void dispose(){
-		m_engine.synthStop(m_nodeId);
+		Engine.synthStop(m_nodeId);
 	};
 }
 

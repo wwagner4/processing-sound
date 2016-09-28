@@ -32,7 +32,6 @@ import processing.core.PApplet;
 public class SawOsc implements Oscillator{
 	
 	PApplet parent;
-	private Engine m_engine;
 	private int[] m_nodeId = {-1,-1};
 	
 	private int[] m_freqId = {-1,-1};
@@ -49,24 +48,24 @@ public class SawOsc implements Oscillator{
 	public SawOsc(PApplet theParent) {
 		this.parent = theParent;
 		parent.registerMethod("dispose", this);
-		m_engine.setPreferences(theParent, 512, 44100);
-    	m_engine.start();		
-		m_panBusId = m_engine.busConstructMono();    	
+		Engine.setPreferences(theParent, 512, 44100);
+    	Engine.start();		
+		m_panBusId = Engine.busConstructMono();    	
 	}
 	
 	public void play(float freq, float amp, float add, float pos){
 		m_freq=freq; m_amp=amp; m_add=add; m_pos=pos;
-		m_nodeId = m_engine.sawPlay(m_freq, m_amp, m_add, m_pos, m_panBusId);
+		m_nodeId = Engine.sawPlay(m_freq, m_amp, m_add, m_pos, m_panBusId);
 	}
 	
 	public void play(float freq, float amp, float add){
 		m_freq=freq; m_amp=amp; m_add=add;
-		m_nodeId = m_engine.sawPlay(m_freq, m_amp, m_add, m_pos, m_panBusId);
+		m_nodeId = Engine.sawPlay(m_freq, m_amp, m_add, m_pos, m_panBusId);
 	}
 	
 	public void play(float freq, float amp){
 		m_freq=freq; m_amp=amp;
-		m_nodeId = m_engine.sawPlay(m_freq, m_amp, m_add, m_pos, m_panBusId);
+		m_nodeId = Engine.sawPlay(m_freq, m_amp, m_add, m_pos, m_panBusId);
 	}
 	
 	/**
@@ -75,18 +74,18 @@ public class SawOsc implements Oscillator{
 	**/
 	
 	public void play(){
-		m_nodeId = m_engine.sawPlay(m_freq, m_amp, m_add, m_pos, m_panBusId);
+		m_nodeId = Engine.sawPlay(m_freq, m_amp, m_add, m_pos, m_panBusId);
 	}
 	
 	private void set(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.oscSet(m_freq, m_amp, m_add, m_pos, m_nodeId);
+			Engine.oscSet(m_freq, m_amp, m_add, m_pos, m_nodeId);
 		}	
 	}
 
 	private void audioSet(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.oscAudioSet(m_freqId, m_ampId, m_addId, m_posId, m_nodeId);
+			Engine.oscAudioSet(m_freqId, m_ampId, m_addId, m_posId, m_nodeId);
 		}	
 	}
 	
@@ -175,7 +174,7 @@ public class SawOsc implements Oscillator{
 
 	public void stop(){
 		if(m_nodeId[0] != -1 ) {
-			m_engine.synthStop(m_nodeId);
+			Engine.synthStop(m_nodeId);
 			for(int i = 0; i < m_nodeId.length; i++)  {
 				m_nodeId[i] = -1;
 			}
@@ -187,6 +186,6 @@ public class SawOsc implements Oscillator{
 	}
 
 	public void dispose() {
-		m_engine.synthStop(m_nodeId);
+		Engine.synthStop(m_nodeId);
 	}
 }
