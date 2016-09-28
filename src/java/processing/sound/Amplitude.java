@@ -63,6 +63,5 @@ public class Amplitude {
 	
 	public void dispose() {
 		Engine.destroy_amplitude(ptr);
-		//Engine.synthStop(m_nodeId);
 	}
 }
